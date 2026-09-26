@@ -1,0 +1,30 @@
+# Dependencies
+node_modules
+*/node_modules
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# Databases & local logs
+*.log
+database/*.db
+database/*.db-journal
+database/*.db-wal
+database/*.db-shm
+*.db
+*.db-wal
+*.db-shm
+
+# Build output
+dist
+frontend/dist
+
+# Temporary & scrap
+scratch/
+scratch_git/
+portable_git/
+fetch_git.mjs
+backend/uploads/*
+!backend/uploads/.gitkeep
