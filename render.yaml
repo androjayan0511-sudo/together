@@ -1,10 +1,9 @@
 services:
   - type: web
-    name: togethermiles-backend
+    name: togethermiles
     env: node
     plan: free
-    rootDir: backend
-    buildCommand: npm install
+    buildCommand: npm run build
     startCommand: npm start
     healthCheckPath: /api/health
     envVars:

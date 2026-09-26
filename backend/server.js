@@ -2,6 +2,7 @@ import http from 'node:http';
 import express from 'express';
 import cors from 'cors';
 import path from 'node:path';
+import fs from 'node:fs';
 import { fileURLToPath } from 'node:url';
 
 import { config } from './app/config/index.js';
@@ -70,6 +71,18 @@ app.use('/api/journal', journalRouter);
 app.use('/api/activities', activityRouter);
 app.use('/api/notifications', notificationRouter);
 app.use('/api/home', homeRouter);
+
+// Serve built frontend assets if present (Single deployment on Render)
+const frontendDist = path.resolve(__dirname, '../frontend/dist');
+if (fs.existsSync(frontendDist)) {
+  app.use(express.static(frontendDist));
+  app.get('*', (req, res, next) => {
+    if (req.path.startsWith('/api') || req.path.startsWith('/uploads') || req.path.startsWith('/ws')) {
+      return next();
+    }
+    res.sendFile(path.join(frontendDist, 'index.html'));
+  });
+}
 
 // 404 handler for API routes
 app.use('/api/*', (req, res) => {
